@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Programming Hub</string>
+    <string name="title_cpp">C++</string>
+    <string name="title_c">C</string>
+    <string name="insert">Insert</string>
+</resources>
