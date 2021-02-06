@@ -1,5 +1,6 @@
 package com.example.programminghub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch(item.getItemId()){
             case R.id.Insert:
-                Toast.makeText(this,"Inserted a Program",Toast.LENGTH_SHORT).show();
+
+                Intent intent=new Intent(this,insert.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
