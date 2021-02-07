@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/cpp"
-        android:title="@string/title_cpp" />
+        android:title="C++" />
 
     <item
         android:id="@+id/c"
-        android:title="@string/title_c" />
+        android:title="C" />
 
     <item
         android:id="@+id/java"

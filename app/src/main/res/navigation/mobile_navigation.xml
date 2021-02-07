@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/cpp"
-        android:name="com.example.programminghub.ui.home.HomeFragment"
+        android:name="com.example.programminghub.ui.CPP.CPPFragment"
         android:label="@string/title_cpp"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_cpp" />
 
     <fragment
         android:id="@+id/c"
-        android:name="com.example.programminghub.ui.dashboard.DashboardFragment"
+        android:name="com.example.programminghub.ui.C.CFragment"
         android:label="@string/title_c"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_c" />
 
     <fragment
         android:id="@+id/java"
-        android:name="com.example.programminghub.ui.notifications.NotificationsFragment"
+        android:name="com.example.programminghub.ui.JAVA.JavaFragment"
         android:label="@string/insert"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_java" />
 </navigation>

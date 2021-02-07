@@ -8,6 +8,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.CancellationSignal;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,14 +18,22 @@ public class ContentProvider extends android.content.ContentProvider {
     DBhelper mhelper;
 
     public static final int GetData_cpp=100;
-    public static final int Insert_cpp=101;
-    public static final int GetData_c=102;
+    public static final int GetData_c=101;
+    public static final int GetData_java=102;
+    public static final int Insert_cpp=103;
+    public static final int Insert_c=104;
+    public static final int Insert_java=105;
 
     private static final UriMatcher sUriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(DBSchema.Content_Authority,"Cpp/GetData",GetData_cpp);
         sUriMatcher.addURI(DBSchema.Content_Authority,"Cpp/Insert",Insert_cpp);
+        sUriMatcher.addURI(DBSchema.Content_Authority,"C/Insert",Insert_c);
+        sUriMatcher.addURI(DBSchema.Content_Authority,"C/GetData",GetData_c);
+        sUriMatcher.addURI(DBSchema.Content_Authority,"Java/GetData",GetData_java);
+        sUriMatcher.addURI(DBSchema.Content_Authority,"Java/Insert",Insert_java);
+
     }
 
     @Override
@@ -43,6 +52,9 @@ public class ContentProvider extends android.content.ContentProvider {
                 break;
             case GetData_c:
                 cursor=db.query(DBSchema.c.Table_name,projection,selection,selectionArgs,null,null,sortOrder);
+                break;
+            case GetData_java:
+                cursor=db.query(DBSchema.java.Table_name,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
             default:
                 throw new SQLException("Failed To Load Data From Database: "+uri);
@@ -65,11 +77,26 @@ public class ContentProvider extends android.content.ContentProvider {
             mhelper=new DBhelper(getContext());
         }
         final SQLiteDatabase db=mhelper.getWritableDatabase();
+        long status;
         switch (sUriMatcher.match(uri)){
             case Insert_cpp:
-                long status=db.insert(DBSchema.cpp.Table_name,null,contentValues);
+                 status=db.insert(DBSchema.cpp.Table_name,null,contentValues);
                 if(status>0){
                     InsertUri= ContentUris.withAppendedId(DBSchema.Cpp_Insert_Uri,status);
+                    getContext().getContentResolver().notifyChange(InsertUri,null);
+                }
+                break;
+            case Insert_c:
+                status=db.insert(DBSchema.c.Table_name,null, contentValues);
+                if(status>0){
+                    InsertUri= ContentUris.withAppendedId(DBSchema.C_Insert_Uri,status);
+                    getContext().getContentResolver().notifyChange(InsertUri,null);
+                }
+                break;
+            case Insert_java:
+                status=db.insert(DBSchema.java.Table_name,null,contentValues);
+                if(status>0){
+                    InsertUri= ContentUris.withAppendedId(DBSchema.Java_Insert_Uri,status);
                     getContext().getContentResolver().notifyChange(InsertUri,null);
                 }
                 break;
