@@ -4,17 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
-import com.example.programminghub.DBSchema;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
+import java.io.FileInputStream;
+import com.example.programminghub.DBSchema;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class insert extends AppCompatActivity {
 
@@ -59,11 +62,40 @@ public class insert extends AppCompatActivity {
         }else if(lan_c.isChecked()){
             uri = getContentResolver().insert(DBSchema.C_Insert_Uri,values);
         }else if(lan_java.isChecked()){
+            //InsertRes(values);
             uri = getContentResolver().insert(DBSchema.Java_Insert_Uri,values);
+
         }
 
         status=Long.valueOf(uri.getLastPathSegment());
         Toast.makeText(this, "New Activity Added: " + status, Toast.LENGTH_SHORT).show();
         }
+    }/*
+    private ContentValues InsertImg(ContentValues values, String x){
+        try{
+            FileInputStream fs=new FileInputStream(x);
+            byte[] imgbyte=new byte[fs.available()];
+            fs.read(imgbyte);
+            values.put(DBSchema.java._img,imgbyte);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return values;
     }
+    private ContentValues InsertRes(ContentValues values){
+        try{
+            FileInputStream fs=new FileInputStream(String.valueOf(R.drawable.test));
+            byte[] imgbyte=new byte[fs.available()];
+            fs.read(imgbyte);
+            values.put(DBSchema.java._img,imgbyte);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return values;
+    }*/
+
 }

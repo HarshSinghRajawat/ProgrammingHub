@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class HubCursorAdapter extends CursorAdapter {
 
         String code_title=cursor.getString(cursor.getColumnIndex("Title"));
         String code_body=cursor.getString(cursor.getColumnIndex("Code"));
+        //byte[] img=cursor.getBlob(cursor.getColumnIndex("Img"));
 
         title.setText(code_title);
         body.setText(code_body);
@@ -40,6 +42,7 @@ public class HubCursorAdapter extends CursorAdapter {
                 Intent intent=new Intent(view.getContext(),ProgramOutput.class);
                 intent.putExtra("title",code_title);
                 intent.putExtra("body",code_body);
+                //intent.putExtra("img",img);
 
                 view.getContext().startActivity(intent);
 

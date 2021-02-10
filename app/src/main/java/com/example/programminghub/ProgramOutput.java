@@ -3,7 +3,9 @@ package com.example.programminghub;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProgramOutput extends AppCompatActivity {
@@ -15,9 +17,17 @@ public class ProgramOutput extends AppCompatActivity {
         Intent intent=getIntent();
         String title=(String) intent.getSerializableExtra("title");
         String body =(String)intent.getSerializableExtra("body");
+
         TextView output_Title=(TextView)findViewById(R.id.out_title);
         TextView output_Code=(TextView)findViewById(R.id.out_code);
+
+
         output_Title.setText(title);
         output_Code.setText(body);
+
+/*
+        ImageView img=(ImageView) findViewById(R.id.out_img);
+        byte[] ImgData =(byte[]) intent.getSerializableExtra("img");
+        img.setImageResource(ImgData);*/
     }
 }

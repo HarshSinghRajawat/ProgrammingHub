@@ -36,5 +36,6 @@ public final class DBSchema {
         public static final String _ID=BaseColumns._ID;
         public static final String _title="Title";
         public static final String _body="Code";
+        //public static final String _img="Img";
     }
 }
