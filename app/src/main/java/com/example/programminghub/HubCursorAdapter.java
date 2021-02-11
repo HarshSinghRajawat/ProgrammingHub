@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +27,22 @@ public class HubCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView title=(TextView)view.findViewById(R.id.title);
-        TextView body=(TextView)view.findViewById(R.id.body);
+        TextView body=(TextView)view.findViewById(R.id.des);
+        ImageView img = (ImageView)view.findViewById(R.id.view);
 
 
         String code_title=cursor.getString(cursor.getColumnIndex("Title"));
         String code_body=cursor.getString(cursor.getColumnIndex("Code"));
-        //byte[] img=cursor.getBlob(cursor.getColumnIndex("Img"));
+        int lan =cursor.getInt(cursor.getColumnIndex("lan"));
 
+        if(lan==1){
+            img.setImageResource(R.mipmap.ic_cpp);
+        }
+        else if(lan==2){
+            img.setImageResource(R.mipmap.ic_c);
+        }else {
+            img.setImageResource(R.mipmap.ic_java);
+        }
         title.setText(code_title);
         body.setText(code_body);
 
@@ -42,6 +52,7 @@ public class HubCursorAdapter extends CursorAdapter {
                 Intent intent=new Intent(view.getContext(),ProgramOutput.class);
                 intent.putExtra("title",code_title);
                 intent.putExtra("body",code_body);
+
                 //intent.putExtra("img",img);
 
                 view.getContext().startActivity(intent);

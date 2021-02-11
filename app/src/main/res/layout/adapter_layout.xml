@@ -5,8 +5,21 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="0dp"
     android:id="@+id/AdapterView"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="62dp"
+        android:layout_height="62dp">
 
+    <ImageView
+        android:layout_width="60dp"
+        android:id="@+id/view"
+        android:layout_height="60dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp">
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -16,12 +29,13 @@
         android:textAllCaps="true"
         android:layout_marginTop="10dp"/>
     <TextView
-        android:id="@+id/body"
+        android:id="@+id/des"
         android:layout_width="match_parent"
+
         android:textSize="10sp"
         android:layout_height="36dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"/>
-
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"/>
+    </LinearLayout>
 </LinearLayout>

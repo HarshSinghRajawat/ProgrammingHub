@@ -24,18 +24,24 @@ public final class DBSchema {
         public static final String _ID=BaseColumns._ID;
         public static final String _title="Title";
         public static final String _body="Code";
+        public static final String _lan="lan";
+        public static final String _des="des";
     }
     public static final class c implements BaseColumns{
         public static final String Table_name="cPrograms";
         public static final String _ID=BaseColumns._ID;
         public static final String _title="Title";
         public static final String _body="Code";
+        public static final String _lan="lan";
+        public static final String _des="des";
     }
     public static final class java implements BaseColumns{
         public static final String Table_name="javaPrograms";
         public static final String _ID=BaseColumns._ID;
         public static final String _title="Title";
         public static final String _body="Code";
+        public static final String _lan="lan";
+        public static final String _des="des";
         //public static final String _img="Img";
     }
 }
