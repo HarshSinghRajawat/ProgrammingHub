@@ -1,5 +1,4 @@
 package com.example.programminghub.ui.C;
-
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;

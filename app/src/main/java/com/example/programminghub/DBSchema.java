@@ -42,6 +42,6 @@ public final class DBSchema {
         public static final String _body="Code";
         public static final String _lan="lan";
         public static final String _des="des";
-        //public static final String _img="Img";
+        public static final String _img="Img";
     }
 }
