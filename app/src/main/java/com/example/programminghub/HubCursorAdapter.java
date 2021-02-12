@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +35,13 @@ public class HubCursorAdapter extends CursorAdapter {
 
         String code_title=cursor.getString(cursor.getColumnIndex("Title"));
         String code_body=cursor.getString(cursor.getColumnIndex("Code"));
-        int lan =cursor.getInt(cursor.getColumnIndex("lan"));
+        String des=cursor.getString(cursor.getColumnIndex("des"));
+        byte[] en_img=cursor.getBlob(cursor.getColumnIndex("img"));
 
+
+
+        Bitmap bitmap= BitmapFactory.decodeByteArray(en_img,0,en_img.length);
+/*
         if(lan==1){
             img.setImageResource(R.mipmap.ic_cpp);
         }
@@ -42,22 +49,24 @@ public class HubCursorAdapter extends CursorAdapter {
             img.setImageResource(R.mipmap.ic_c);
         }else {
             img.setImageResource(R.mipmap.ic_java);
-        }
+        }*/
         title.setText(code_title);
         body.setText(code_body);
+        img.setImageBitmap(bitmap);
 
         view.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),ProgramOutput.class);
                 intent.putExtra("title",code_title);
-                intent.putExtra("body",code_body);
+                intent.putExtra("img",en_img);
+                intent.putExtra("code",code_body);
 
-                //intent.putExtra("img",img);
 
                 view.getContext().startActivity(intent);
 
             }
         });
     }
+
 }

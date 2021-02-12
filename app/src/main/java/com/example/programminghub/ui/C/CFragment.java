@@ -36,7 +36,7 @@ public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._body,DBSchema.c._lan};
+        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
         return new CursorLoader(getContext(), DBSchema.C_Content_Uri,projection,null,null,null);
     }
 
@@ -50,7 +50,7 @@ public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks
         adapter.swapCursor(null);
     }
     private void GetData(View root){
-        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._body,DBSchema.c._lan};
+        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
         Cursor cursor =getActivity().getContentResolver().query(DBSchema.C_Content_Uri,projection,null,null,null);
 
         display(cursor,root);

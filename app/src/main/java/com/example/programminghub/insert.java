@@ -67,15 +67,19 @@ public class insert extends AppCompatActivity {
     private void InsertIntoDB(){
         EditText str1=(EditText)findViewById(R.id.text_title);
         EditText str2=(EditText)findViewById(R.id.text_code);
+        EditText str3=(EditText)findViewById(R.id.in_des);
         RadioButton lan_cpp=(RadioButton)findViewById(R.id.lan_cpp);
         RadioButton lan_c=(RadioButton)findViewById(R.id.lan_c);
         RadioButton lan_java=(RadioButton)findViewById(R.id.lan_java);
 
+
         Editable EditableStr1=str1.getText();
         Editable EditableStr2=str2.getText();
+        Editable EditableStr3=str3.getText();
 
         String title=EditableStr1.toString().trim();
         String code=EditableStr2.toString().trim();
+        String des=EditableStr3.toString().trim();
 
         if(title.length()<=0||code.length()<=0){
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
@@ -84,7 +88,7 @@ public class insert extends AppCompatActivity {
         values.put(DBSchema.cpp._title,title);
         values.put(DBSchema.cpp._body,code);
         values.put(DBSchema.cpp._img,imageToByte(imageView));
-        //values.put(DBSchema.cpp._des,);
+        values.put(DBSchema.cpp._des,des);
 
         Uri uri=null;
         long status;

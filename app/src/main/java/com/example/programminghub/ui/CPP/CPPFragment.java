@@ -40,7 +40,7 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
         return root;
     }
     private void GetData(View root){
-        String[] projection={DBSchema.cpp._ID,DBSchema.cpp._title,DBSchema.cpp._body,DBSchema.cpp._lan};
+        String[] projection={DBSchema.cpp._ID,DBSchema.cpp._title,DBSchema.cpp._img,DBSchema.cpp._des,DBSchema.cpp._body};
         Cursor cursor =getActivity().getContentResolver().query(DBSchema.Cpp_Content_Uri,projection,null,null,null);
 
         display(cursor,root);
@@ -50,7 +50,7 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String[] projection={DBSchema.cpp._ID,DBSchema.cpp._title,DBSchema.cpp._body,DBSchema.cpp._lan};
+        String[] projection={DBSchema.cpp._ID,DBSchema.cpp._title,DBSchema.cpp._img,DBSchema.cpp._des,DBSchema.cpp._body};
         return new CursorLoader(getContext(), DBSchema.Cpp_Content_Uri,projection,null,null,null);
     }
 

@@ -33,7 +33,7 @@ public class JavaFragment extends Fragment implements LoaderManager.LoaderCallba
         return root;
     }
     private void GetData(View root){
-        String[] projection={DBSchema.java._ID,DBSchema.java._title,DBSchema.java._body,DBSchema.java._lan};
+        String[] projection={DBSchema.java._ID,DBSchema.java._title,DBSchema.java._img,DBSchema.java._des,DBSchema.java._body};
         Cursor cursor =getActivity().getContentResolver().query(DBSchema.Java_Content_Uri,projection,null,null,null);
         display(cursor,root);
     }
@@ -45,7 +45,7 @@ public class JavaFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String[] projection={DBSchema.java._ID,DBSchema.java._title,DBSchema.java._body,DBSchema.java._lan};
+        String[] projection={DBSchema.java._ID,DBSchema.java._title,DBSchema.java._img,DBSchema.java._des,DBSchema.java._body};
         return new CursorLoader(getContext(), DBSchema.Java_Content_Uri,projection,null,null,null);
     }
 
