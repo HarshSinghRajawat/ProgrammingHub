@@ -26,6 +26,7 @@ public final class DBSchema {
         public static final String _body="Code";
         public static final String _lan="lan";
         public static final String _des="des";
+        public static final String _img="img";
     }
     public static final class c implements BaseColumns{
         public static final String Table_name="cPrograms";
@@ -34,6 +35,7 @@ public final class DBSchema {
         public static final String _body="Code";
         public static final String _lan="lan";
         public static final String _des="des";
+        public static final String _img="img";
     }
     public static final class java implements BaseColumns{
         public static final String Table_name="javaPrograms";
@@ -42,6 +44,6 @@ public final class DBSchema {
         public static final String _body="Code";
         public static final String _lan="lan";
         public static final String _des="des";
-        public static final String _img="Img";
+        public static final String _img="img";
     }
 }

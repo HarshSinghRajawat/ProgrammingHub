@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import com.example.programminghub.DBSchema;
 import java.io.FileNotFoundException;
@@ -38,7 +40,7 @@ public class insert extends AppCompatActivity {
         setContentView(R.layout.activity_insert);
         Button buttonView= (Button) findViewById(R.id.button);
         Button addButton=(Button)findViewById(R.id.add_img);
-        ImageView img=(ImageView)findViewById(R.id.in_img);
+        imageView=(ImageView) findViewById(R.id.in_img);
 
         buttonView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -51,12 +53,6 @@ public class insert extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
-            }
-        });
-        img.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
                 ActivityCompat.requestPermissions(
                         insert.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -64,6 +60,7 @@ public class insert extends AppCompatActivity {
                 );
             }
         });
+
     }
 
 
@@ -86,6 +83,9 @@ public class insert extends AppCompatActivity {
         ContentValues values=new ContentValues();
         values.put(DBSchema.cpp._title,title);
         values.put(DBSchema.cpp._body,code);
+        values.put(DBSchema.cpp._img,imageToByte(imageView));
+        //values.put(DBSchema.cpp._des,);
+
         Uri uri=null;
         long status;
 
@@ -94,7 +94,6 @@ public class insert extends AppCompatActivity {
         }else if(lan_c.isChecked()){
             uri = getContentResolver().insert(DBSchema.C_Insert_Uri,values);
         }else if(lan_java.isChecked()){
-            //InsertRes(values);
             uri = getContentResolver().insert(DBSchema.Java_Insert_Uri,values);
 
         }
@@ -138,6 +137,13 @@ public class insert extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    public static byte[] imageToByte(ImageView image){
+        Bitmap bitmap=((BitmapDrawable)image.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+        byte[] byteArray=stream.toByteArray();
+        return byteArray;
     }
 
 }

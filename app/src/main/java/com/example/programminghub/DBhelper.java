@@ -19,17 +19,22 @@ public class DBhelper extends SQLiteOpenHelper {
                 DBSchema.cpp._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 DBSchema.cpp._title+" TEXT NOT NULL,"+
                 DBSchema.cpp._lan+ " TEXT DEFAULT 1,"+
+                DBSchema.cpp._img+ " BLOB,"+
+                DBSchema.cpp._des+ " TEXT,"+
                 DBSchema.cpp._body+" TEXT NOT NULL);";
         String C_CREATE_TABLE="CREATE TABLE "+ DBSchema.c.Table_name +"(" +
                 DBSchema.c._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 DBSchema.c._title+" TEXT NOT NULL,"+
                 DBSchema.c._lan+ " INTEGER DEFAULT 2,"+
+                DBSchema.c._img+ " BLOB,"+
+                DBSchema.c._des+ " TEXT,"+
                 DBSchema.c._body+" TEXT NOT NULL);";
         String JAVA_CREATE_TABLE="CREATE TABLE "+ DBSchema.java.Table_name +"(" +
                 DBSchema.java._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 DBSchema.java._title+" TEXT NOT NULL,"+
                 DBSchema.java._lan+ " INTEGER DEFAULT 3,"+
                 DBSchema.java._img+ " BLOB,"+
+                DBSchema.java._des+ " TEXT,"+
                 DBSchema.java._body+" TEXT NOT NULL);";
 
         db.execSQL(CPP_CREATE_TABLE);
