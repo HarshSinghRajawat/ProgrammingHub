@@ -154,9 +154,7 @@
         android:layout_marginTop="28dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_code"
-        app:srcCompat="@drawable/test"
-
-        tools:ignore="VectorDrawableCompat" />
+        app:srcCompat="@mipmap/ic_cpp" />
 
     <Button
         android:id="@+id/add_img"

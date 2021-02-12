@@ -1,11 +1,16 @@
 package com.example.programminghub;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,11 +25,13 @@ import java.io.FileInputStream;
 import com.example.programminghub.DBSchema;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class insert extends AppCompatActivity {
 
     final int REQUEST_CODE_GALLERY=111;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +47,7 @@ public class insert extends AppCompatActivity {
                 Intent intent=new Intent(view.getContext(),MainActivity.class);
                 startActivity(intent);
             }
-        });/*
+        });
         addButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -56,8 +63,10 @@ public class insert extends AppCompatActivity {
                         REQUEST_CODE_GALLERY
                 );
             }
-        });*/
+        });
     }
+
+
     private void InsertIntoDB(){
         EditText str1=(EditText)findViewById(R.id.text_title);
         EditText str2=(EditText)findViewById(R.id.text_code);
@@ -93,32 +102,42 @@ public class insert extends AppCompatActivity {
         status=Long.valueOf(uri.getLastPathSegment());
         Toast.makeText(this, "New Activity Added: " + status, Toast.LENGTH_SHORT).show();
         }
-    }/*
-    private ContentValues InsertImg(ContentValues values, String x){
-        try{
-            FileInputStream fs=new FileInputStream(x);
-            byte[] imgbyte=new byte[fs.available()];
-            fs.read(imgbyte);
-            values.put(DBSchema.java._img,imgbyte);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return values;
     }
-    private ContentValues InsertRes(ContentValues values){
-        try{
-            FileInputStream fs=new FileInputStream(String.valueOf(R.drawable.test));
-            byte[] imgbyte=new byte[fs.available()];
-            fs.read(imgbyte);
-            values.put(DBSchema.java._img,imgbyte);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == REQUEST_CODE_GALLERY){
+            if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_CODE_GALLERY);
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "You don't have permission to access file location!", Toast.LENGTH_SHORT).show();
+            }
+            return;
         }
-        return values;
-    }*/
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){
+            Uri uri = data.getData();
+
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                imageView.setImageBitmap(bitmap);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 }
