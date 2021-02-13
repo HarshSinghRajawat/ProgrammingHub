@@ -23,36 +23,33 @@ import java.util.ArrayList;
 
 public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int data_loader=0;
+    private static final int data_loader=1;
     HubCursorAdapter adapter;
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_c, container, false);
 
+        ListView list=(ListView) root.findViewById(R.id.c_list);
 
+/*
         ArrayList<CursorData> data=new ArrayList<CursorData>();
         String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
         Cursor cursor=getContext().getContentResolver().query(DBSchema.C_Content_Uri,projection,null,null,null);
 
 
         data.add(new CursorData(cursor));
-
-
-
-
-        ListView list=(ListView) root.findViewById(R.id.c_list);
-
-
         DatabaseAdapter adapter=new DatabaseAdapter(getActivity() ,data);
-
         list.setAdapter(adapter);
 
+*/
 
 
-        /*
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        getLoaderManager().initLoader(data_loader,null,this);*/
+        //getLoaderManager().initLoader(data_loader,null,this);
+        getActivity().getSupportLoaderManager().initLoader(data_loader,null,this);
+
+
         return root;
     }
 

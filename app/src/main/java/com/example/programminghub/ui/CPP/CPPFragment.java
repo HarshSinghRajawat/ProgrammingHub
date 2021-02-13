@@ -35,7 +35,9 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
 
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        getLoaderManager().initLoader(data_loader,null,this);
+        //getLoaderManager().initLoader(data_loader,null,this);
+        getActivity().getSupportLoaderManager().initLoader(data_loader,null,this);
+
 
         return root;
     }
@@ -44,7 +46,6 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
         Cursor cursor =getActivity().getContentResolver().query(DBSchema.Cpp_Content_Uri,projection,null,null,null);
 
         display(cursor,root);
-
     }
 
     @NonNull

@@ -7,6 +7,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +19,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
-public class HubCursorAdapter extends CursorAdapter {
+import com.example.programminghub.ui.C.CFragment;
+import com.example.programminghub.ui.CPP.CPPFragment;
+import com.example.programminghub.ui.JAVA.JavaFragment;
+
+
+public class HubCursorAdapter extends CursorAdapter implements LoaderManager.LoaderCallbacks<Cursor> {
     public HubCursorAdapter(Context context, Cursor cursor){super(context,cursor,0);}
-
+    private static final int data_loader=0;
+    Context curView = null;
+    HubCursorAdapter adapter;
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
 
@@ -31,6 +46,7 @@ public class HubCursorAdapter extends CursorAdapter {
         TextView title=(TextView)view.findViewById(R.id.title);
         TextView body=(TextView)view.findViewById(R.id.des);
         ImageView img = (ImageView)view.findViewById(R.id.view);
+        curView=view.getContext();
 
 
         String code_title=cursor.getString(cursor.getColumnIndex("Title"));
@@ -41,6 +57,9 @@ public class HubCursorAdapter extends CursorAdapter {
 
 
         Bitmap bitmap= BitmapFactory.decodeByteArray(en_img,0,en_img.length);
+        Bitmap thumb=generateThumb(bitmap,240000);
+
+
 /*
         if(lan==1){
             img.setImageResource(R.mipmap.ic_cpp);
@@ -52,7 +71,7 @@ public class HubCursorAdapter extends CursorAdapter {
         }*/
         title.setText(code_title);
         body.setText(code_body);
-        img.setImageBitmap(bitmap);
+        img.setImageBitmap(thumb);
 
         view.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,4 +88,60 @@ public class HubCursorAdapter extends CursorAdapter {
         });
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
+        Uri curUri=null;
+        if(curView.equals(CFragment.class)){
+            curUri=DBSchema.C_Content_Uri;
+        }
+        else if(curView.equals(CPPFragment.class)){
+            curUri= DBSchema.Cpp_Content_Uri;
+        }
+        else if(curView.equals(JavaFragment.class)){
+            curUri=DBSchema.Java_Content_Uri;
+        }else {Toast.makeText(curView,"Problem in OnCreate Mathod of the Loader",Toast.LENGTH_SHORT).show();
+            return null;}
+
+        return new CursorLoader(curView, curUri,projection,null,null,null);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+    }
+
+    public static Bitmap reduceBitmapSize(Bitmap bitmap,int MAX_SIZE) {
+        double ratioSquare;
+        int bitmapHeight, bitmapWidth;
+        bitmapHeight = bitmap.getHeight();
+        bitmapWidth = bitmap.getWidth();
+        ratioSquare = (bitmapHeight * bitmapWidth) / MAX_SIZE;
+        if (ratioSquare <= 1)
+            return bitmap;
+        double ratio = Math.sqrt(ratioSquare);
+        Log.d("mylog", "Ratio: " + ratio);
+        int requiredHeight = (int) Math.round(bitmapHeight / ratio);
+        int requiredWidth = (int) Math.round(bitmapWidth / ratio);
+        return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
+    }
+    public static Bitmap generateThumb(Bitmap bitmap, int THUMB_SIZE) {
+        double ratioSquare;
+        int bitmapHeight, bitmapWidth;
+        bitmapHeight = bitmap.getHeight();
+        bitmapWidth = bitmap.getWidth();
+        ratioSquare = (bitmapHeight * bitmapWidth) / THUMB_SIZE;
+        if (ratioSquare <= 1)
+            return bitmap;
+        double ratio = Math.sqrt(ratioSquare);
+        Log.d("mylog", "Ratio: " + ratio);
+        int requiredHeight = (int) Math.round(bitmapHeight / ratio);
+        int requiredWidth = (int) Math.round(bitmapWidth / ratio);
+        return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
+    }
 }

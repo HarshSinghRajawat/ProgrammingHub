@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -133,6 +134,8 @@ public class insert extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                bitmap=reduceBitmapSize(bitmap,240000);
+
                 imageView.setImageBitmap(bitmap);
 
             } catch (FileNotFoundException e) {
@@ -149,5 +152,21 @@ public class insert extends AppCompatActivity {
         byte[] byteArray=stream.toByteArray();
         return byteArray;
     }
+    public static Bitmap reduceBitmapSize(Bitmap bitmap,int MAX_SIZE) {
+        double ratioSquare;
+        int bitmapHeight, bitmapWidth;
+        bitmapHeight = bitmap.getHeight();
+        bitmapWidth = bitmap.getWidth();
+        ratioSquare = (bitmapHeight * bitmapWidth) / MAX_SIZE;
+        if (ratioSquare <= 1)
+            return bitmap;
+        double ratio = Math.sqrt(ratioSquare);
+        Log.d("mylog", "Ratio: " + ratio);
+        int requiredHeight = (int) Math.round(bitmapHeight / ratio);
+        int requiredWidth = (int) Math.round(bitmapWidth / ratio);
+        return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
+    }
+
+
 
 }

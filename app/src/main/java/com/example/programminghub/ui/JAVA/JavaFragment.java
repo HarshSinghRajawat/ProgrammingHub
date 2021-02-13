@@ -19,7 +19,7 @@ import com.example.programminghub.HubCursorAdapter;
 import com.example.programminghub.R;
 
 public class JavaFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final int data_loader=0;
+    private static final int data_loader=2;
     HubCursorAdapter adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,7 +29,8 @@ public class JavaFragment extends Fragment implements LoaderManager.LoaderCallba
 
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        getLoaderManager().initLoader(data_loader,null,this);
+        //getLoaderManager().initLoader(data_loader,null,this);
+        getActivity().getSupportLoaderManager().initLoader(data_loader,null,this);
         return root;
     }
     private void GetData(View root){
