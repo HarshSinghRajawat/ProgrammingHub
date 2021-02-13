@@ -13,13 +13,9 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.example.programminghub.CursorData;
 import com.example.programminghub.DBSchema;
-import com.example.programminghub.DatabaseAdapter;
 import com.example.programminghub.HubCursorAdapter;
 import com.example.programminghub.R;
-
-import java.util.ArrayList;
 
 public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
