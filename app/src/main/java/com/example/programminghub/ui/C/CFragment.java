@@ -13,9 +13,13 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import com.example.programminghub.CursorData;
 import com.example.programminghub.DBSchema;
+import com.example.programminghub.DatabaseAdapter;
 import com.example.programminghub.HubCursorAdapter;
 import com.example.programminghub.R;
+
+import java.util.ArrayList;
 
 public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -26,11 +30,29 @@ public class CFragment extends Fragment implements LoaderManager.LoaderCallbacks
         View root = inflater.inflate(R.layout.fragment_c, container, false);
 
 
+        ArrayList<CursorData> data=new ArrayList<CursorData>();
+        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
+        Cursor cursor=getContext().getContentResolver().query(DBSchema.C_Content_Uri,projection,null,null,null);
+
+
+        data.add(new CursorData(cursor));
+
+
+
+
         ListView list=(ListView) root.findViewById(R.id.c_list);
 
+
+        DatabaseAdapter adapter=new DatabaseAdapter(getActivity() ,data);
+
+        list.setAdapter(adapter);
+
+
+
+        /*
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        getLoaderManager().initLoader(data_loader,null,this);
+        getLoaderManager().initLoader(data_loader,null,this);*/
         return root;
     }
 
