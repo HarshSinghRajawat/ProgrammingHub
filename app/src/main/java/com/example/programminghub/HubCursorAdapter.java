@@ -57,7 +57,7 @@ public class HubCursorAdapter extends CursorAdapter implements LoaderManager.Loa
 
 
         Bitmap bitmap= BitmapFactory.decodeByteArray(en_img,0,en_img.length);
-        Bitmap thumb=generateThumb(bitmap,240000);
+        Bitmap thumb=generateThumb(bitmap,76800);
 
 
 /*
