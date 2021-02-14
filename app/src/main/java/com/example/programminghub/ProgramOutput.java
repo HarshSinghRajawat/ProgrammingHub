@@ -33,9 +33,5 @@ public class ProgramOutput extends AppCompatActivity {
         output_Title.setText(title);
         output_Code.setText(body);
 
-/*
-        ImageView img=(ImageView) findViewById(R.id.out_img);
-        byte[] ImgData =(byte[]) intent.getSerializableExtra("img");
-        img.setImageResource(ImgData);*/
     }
 }

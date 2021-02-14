@@ -29,7 +29,6 @@ public class JavaFragment extends Fragment implements LoaderManager.LoaderCallba
 
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        //getLoaderManager().initLoader(data_loader,null,this);
         getActivity().getSupportLoaderManager().initLoader(data_loader,null,this);
         return root;
     }

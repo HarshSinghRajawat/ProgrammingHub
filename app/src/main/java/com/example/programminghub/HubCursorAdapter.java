@@ -30,7 +30,7 @@ import com.example.programminghub.ui.CPP.CPPFragment;
 import com.example.programminghub.ui.JAVA.JavaFragment;
 
 
-public class HubCursorAdapter extends CursorAdapter implements LoaderManager.LoaderCallbacks<Cursor> {
+public class HubCursorAdapter extends CursorAdapter {
     public HubCursorAdapter(Context context, Cursor cursor){super(context,cursor,0);}
     private static final int data_loader=0;
     Context curView = null;
@@ -58,17 +58,6 @@ public class HubCursorAdapter extends CursorAdapter implements LoaderManager.Loa
 
         Bitmap bitmap= BitmapFactory.decodeByteArray(en_img,0,en_img.length);
         Bitmap thumb=generateThumb(bitmap,76800);
-
-
-/*
-        if(lan==1){
-            img.setImageResource(R.mipmap.ic_cpp);
-        }
-        else if(lan==2){
-            img.setImageResource(R.mipmap.ic_c);
-        }else {
-            img.setImageResource(R.mipmap.ic_java);
-        }*/
         title.setText(code_title);
         body.setText(code_body);
         img.setImageBitmap(thumb);
@@ -86,50 +75,9 @@ public class HubCursorAdapter extends CursorAdapter implements LoaderManager.Loa
 
             }
         });
+
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String[] projection={DBSchema.c._ID,DBSchema.c._title,DBSchema.c._img,DBSchema.c._des,DBSchema.c._body};
-        Uri curUri=null;
-        if(curView.equals(CFragment.class)){
-            curUri=DBSchema.C_Content_Uri;
-        }
-        else if(curView.equals(CPPFragment.class)){
-            curUri= DBSchema.Cpp_Content_Uri;
-        }
-        else if(curView.equals(JavaFragment.class)){
-            curUri=DBSchema.Java_Content_Uri;
-        }else {Toast.makeText(curView,"Problem in OnCreate Mathod of the Loader",Toast.LENGTH_SHORT).show();
-            return null;}
-
-        return new CursorLoader(curView, curUri,projection,null,null,null);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
-    public static Bitmap reduceBitmapSize(Bitmap bitmap,int MAX_SIZE) {
-        double ratioSquare;
-        int bitmapHeight, bitmapWidth;
-        bitmapHeight = bitmap.getHeight();
-        bitmapWidth = bitmap.getWidth();
-        ratioSquare = (bitmapHeight * bitmapWidth) / MAX_SIZE;
-        if (ratioSquare <= 1)
-            return bitmap;
-        double ratio = Math.sqrt(ratioSquare);
-        Log.d("mylog", "Ratio: " + ratio);
-        int requiredHeight = (int) Math.round(bitmapHeight / ratio);
-        int requiredWidth = (int) Math.round(bitmapWidth / ratio);
-        return Bitmap.createScaledBitmap(bitmap, requiredWidth, requiredHeight, true);
-    }
     public static Bitmap generateThumb(Bitmap bitmap, int THUMB_SIZE) {
         double ratioSquare;
         int bitmapHeight, bitmapWidth;

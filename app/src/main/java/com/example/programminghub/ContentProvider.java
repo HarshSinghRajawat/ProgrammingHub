@@ -33,7 +33,6 @@ public class ContentProvider extends android.content.ContentProvider {
         sUriMatcher.addURI(DBSchema.Content_Authority,"C/GetData",GetData_c);
         sUriMatcher.addURI(DBSchema.Content_Authority,"Java/GetData",GetData_java);
         sUriMatcher.addURI(DBSchema.Content_Authority,"Java/Insert",Insert_java);
-
     }
 
     @Override

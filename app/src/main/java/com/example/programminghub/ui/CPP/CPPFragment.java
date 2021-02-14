@@ -35,7 +35,6 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
 
         adapter=new HubCursorAdapter(getContext(),null);
         list.setAdapter(adapter);
-        //getLoaderManager().initLoader(data_loader,null,this);
         getActivity().getSupportLoaderManager().initLoader(data_loader,null,this);
 
 
@@ -46,6 +45,11 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
         Cursor cursor =getActivity().getContentResolver().query(DBSchema.Cpp_Content_Uri,projection,null,null,null);
 
         display(cursor,root);
+    }
+    private void display(Cursor cursor,View root){
+        ListView list=(ListView) root.findViewById(R.id.cpp_list);
+        HubCursorAdapter adapter=new HubCursorAdapter(getContext(),cursor);
+        list.setAdapter(adapter);
     }
 
     @NonNull
@@ -64,9 +68,5 @@ public class CPPFragment extends Fragment implements LoaderManager.LoaderCallbac
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
-    private void display(Cursor cursor,View root){
-        ListView list=(ListView) root.findViewById(R.id.cpp_list);
-        HubCursorAdapter adapter=new HubCursorAdapter(getContext(),cursor);
-        list.setAdapter(adapter);
-    }
+
 }
